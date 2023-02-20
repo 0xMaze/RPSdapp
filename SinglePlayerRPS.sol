@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-contract RPS {
+contract SinglePlayerRPS {
 
     constructor() {
         owner = payable(msg.sender);
