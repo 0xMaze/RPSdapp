@@ -7,11 +7,12 @@ contract SinglePlayerRPS {
     constructor() {
         owner = payable(msg.sender);
         contractAddress = payable(address(this));
+        MIN_BET = 0;
     }
 
     address payable owner;
 
-    uint constant public MIN_BET = 1 ether;
+    uint public MIN_BET;
     uint public initialBet;
     uint public contractBet;
 
@@ -173,5 +174,9 @@ contract SinglePlayerRPS {
     function withdraw() public onlyOwner {
         uint balance = address(this).balance;
         owner.transfer(balance);
+    }
+
+    function setMinBet(uint _minBet) public onlyOwner {
+        MIN_BET = _minBet;
     }
 }
