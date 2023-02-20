@@ -7,7 +7,7 @@ contract SinglePlayerRPS {
     constructor() {
         owner = payable(msg.sender);
         contractAddress = payable(address(this));
-        MIN_BET = 1000000000000000 wei;
+        MIN_BET = 1e16; // 1 finney
     }
 
     address payable owner;
@@ -46,7 +46,7 @@ contract SinglePlayerRPS {
 
     // Bet must be greater than the minimum bet and greater or equal to the initial bet.
     modifier betIsValid() {
-        require(msg.value >= MIN_BET, "Bet size must be at least 1000000000000000 wei");
+        require(msg.value >= MIN_BET && msg.value > 0, "Bet size must be at least 1 finney");
         require(initialBet == 0 || msg.value >= initialBet, "Bet must be at least as big as the initial bet");
         _;
     }
@@ -158,11 +158,6 @@ contract SinglePlayerRPS {
     /******************************* UTILS ************************************/
     /**************************************************************************/
 
-    modifier minAllowedBet() {
-        require(msg.value >= 1000000000000000 wei, "Bet must be at least 1000000000000000 wei");
-        _;
-    }
-
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner can call this function.");
         _;
@@ -181,7 +176,7 @@ contract SinglePlayerRPS {
         owner.transfer(balance);
     }
 
-    function setMinBet(uint _minBet) public payable onlyOwner minAllowedBet {
+    function setMinBet(uint _minBet) public payable onlyOwner betIsValid {
         MIN_BET = _minBet;
     }
 }
