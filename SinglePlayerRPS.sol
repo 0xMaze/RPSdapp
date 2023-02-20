@@ -105,6 +105,8 @@ contract SinglePlayerRPS {
     /****************************** RESULT PHASE ******************************/
     /**************************************************************************/
 
+    event GameFinished(address indexed player, uint bet, Results result);
+
     modifier commitPhaseEnded() {
         require (playerMove != Choices.None && contractMove != Choices.None, "Commit phase has not ended");
         _;
@@ -128,6 +130,9 @@ contract SinglePlayerRPS {
 
         address payable addrPlayer = player;
         uint playerBet = initialBet;
+
+        emit GameFinished(addrPlayer, playerBet, result);
+        
         reset();  // Reset game before paying to avoid reentrancy attacks
         pay(addrPlayer, playerBet, result);
 
