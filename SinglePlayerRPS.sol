@@ -173,7 +173,7 @@ contract SinglePlayerRPS {
     }
 
     function fundContract() public payable {
-        require(msg.value > 0, "You must send some Ether");
+        require(msg.value > 0, "You must send some BNB");
     }
 
     function withdraw() public onlyOwner {
