@@ -163,6 +163,14 @@ contract SinglePlayerRPS {
         _;
     }
 
+    // modfier for setting the minimum bet
+    // minimum bet must be greater than 1 finney
+    // the value is taken from the setMinBet function
+    modifier minBetIsValid(uint _minBet) {
+        require(_minBet >= 1e16, "Minimum bet must be at least 1 finney");
+        _;
+    }
+
     function getBalance() public view returns (uint256) {
         return address(this).balance;
     }
@@ -176,7 +184,7 @@ contract SinglePlayerRPS {
         owner.transfer(balance);
     }
 
-    function setMinBet(uint _minBet) public payable onlyOwner betIsValid {
+    function setMinBet(uint _minBet) public payable onlyOwner minBetIsValid(_minBet) {
         MIN_BET = _minBet;
     }
 }
