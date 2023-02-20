@@ -159,7 +159,7 @@ contract SinglePlayerRPS {
     /**************************************************************************/
 
     modifier minAllowedBet() {
-        require(msg.value >= 1000000000000000 wei, "Bet must be at least bsc");
+        require(msg.value >= 1000000000000000 wei, "Bet must be at least 1000000000000000 wei");
         _;
     }
 
