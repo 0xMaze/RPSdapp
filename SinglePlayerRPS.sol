@@ -46,7 +46,7 @@ contract SinglePlayerRPS {
 
     // Bet must be greater than the minimum bet and greater or equal to the initial bet.
     modifier betIsValid() {
-        require(msg.value >= MIN_BET && msg.value > 0, "Bet size must be at least 1 finney");
+        require(msg.value >= MIN_BET && msg.value > 0, "Bet size must be at least as big as the minimum bet and greater than 0");
         require(initialBet == 0 || msg.value >= initialBet, "Bet must be at least as big as the initial bet");
         _;
     }
@@ -167,7 +167,7 @@ contract SinglePlayerRPS {
     // minimum bet must be greater than 1 finney
     // the value is taken from the setMinBet function
     modifier minBetIsValid(uint _minBet) {
-        require(_minBet >= 1e16, "Minimum bet must be at least 1 finney");
+        require(_minBet >= 1e16, "Minimum bet must be greater than MIN_BET");
         _;
     }
 
