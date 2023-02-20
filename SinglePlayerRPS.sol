@@ -46,7 +46,7 @@ contract SinglePlayerRPS {
 
     // Bet must be greater than the minimum bet and greater or equal to the initial bet.
     modifier betIsValid() {
-        require(msg.value >= MIN_BET, "Bet must be at least bsc");
+        require(msg.value >= MIN_BET, "Bet size must be at least 1000000000000000 wei");
         require(initialBet == 0 || msg.value >= initialBet, "Bet must be at least as big as the initial bet");
         _;
     }
