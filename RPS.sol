@@ -5,8 +5,11 @@ pragma solidity ^0.8.0;
 contract RPS {
 
     constructor() {
+        owner = payable(msg.sender);
         contractAddress = payable(address(this));
     }
+
+    address payable owner;
 
     uint constant public MIN_BET = 1 ether;
     uint public initialBet;
@@ -151,11 +154,24 @@ contract RPS {
 
 
     /**************************************************************************/ 
+    /******************************* UTILS ************************************/
+    /**************************************************************************/
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function.");
+        _;
+    }
+
     function getBalance() public view returns (uint256) {
         return address(this).balance;
     }
 
     function fundContract() public payable {
         require(msg.value > 0, "You must send some Ether");
+    }
+
+    function withdraw() public onlyOwner {
+        uint balance = address(this).balance;
+        owner.transfer(balance);
     }
 }
